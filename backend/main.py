@@ -16,5 +16,35 @@ def greetings():
 def shark():
   return("WHAT! Shark!")
 
+LIBRARY = [
+  {
+    "artist":"ACDC",
+    "song":"Highway To Hell",
+    "played": True,
+  },
+  {
+    "artist":"Silverchair",
+    "song":"Freak",
+    "played": True,
+  },
+  {
+    "artist":"Guns 'n Roses",
+    "song":"Paradise City",
+    "played": False,
+  },
+  {
+    "artist":"Incubus",
+    "song":"Pardon Me",
+    "played": False,
+  }
+]
+
+@app.route("/library", methods=["GET"])
+def all_libraries():
+  return jsonify({
+    "library": LIBRARY,
+    "status": "SUCCESSS"
+  })
+
 if __name__ == "__main__":
   app.run(debug=True)
