@@ -21,10 +21,37 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="align-middle">ACDC</td>
-                <td class="align-middle">Highway to Hell</td>
-                <td class="align-middle">Yes</td>
+              <tr v-for="(lib, index) in library" :key="index">
+                <td class="align-middle">{{ lib.artist }}</td>
+                <td class="align-middle">{{ lib.song }}</td>
+                <td class="align-middle">
+                  <span v-if="lib.played">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"
+                      ></path>
+                    </svg>
+                  </span>
+                  <span v-else>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      fill="#000000"
+                      viewBox="0 0 256 256"
+                    >
+                      <path
+                        d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                      ></path>
+                    </svg>
+                  </span>
+                </td>
                 <td>
                   <div class="btn-group" role="group">
                     <button type="button" class="btn btn-info">
@@ -63,3 +90,31 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  data() {
+    return {
+      library: [],
+    };
+  },
+
+  methods: {
+    getLibraries() {
+      const path = "http://localhost:5000/library";
+      axios
+        .get(path)
+        .then((res) => {
+          this.library = res.data.library;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+  created() {
+    this.getLibraries();
+  },
+};
+</script>
