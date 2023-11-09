@@ -14,7 +14,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">Title</th>
+                <th scope="col">Artist</th>
                 <th scope="col">Song</th>
                 <th scope="col">Played</th>
                 <th scope="col">Actions</th>
