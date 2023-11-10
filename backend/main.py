@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS 
 
 app = Flask(__name__)
@@ -39,12 +39,20 @@ LIBRARY = [
   }
 ]
 
-@app.route("/library", methods=["GET"])
+@app.route("/library", methods=["GET", "POST"])
 def all_libraries():
-  return jsonify({
-    "library": LIBRARY,
-    "status": "SUCCESSS"
-  })
+  response_object = {"status":"success"}
+  if request.method == "POST":
+    post_data = request.get_json()
+    LIBRARY.append({
+      "artist":post_data.get("artists"),
+      "song":post_data.get("song"),
+      "played":post_data.get("played")})
+    response.object["message"] = "Item added!"
+  else:
+    response_object["library"] = LIBRARY
+  return jsonify(response_object)
+  
 
 if __name__ == "__main__":
   app.run(debug=True)
